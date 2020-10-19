@@ -20,7 +20,7 @@
                 <li class="nav-small-cap">PERSONAL</li>
                 <li *ngFor="let item of menuItems"> 
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="mdi mdi-gauge"></i>
+                        <i [class]="item.icon"></i>
                         <span class="hide-menu">
                             {{ item.titulo }} 
                             <span class="label label-rouded label-themecolor pull-right">
@@ -29,7 +29,7 @@
                         </span>
                     </a>
                     <ul *ngFor="let subitems of item.submenu" aria-expanded="false" class="collapse">
-                        <li><a [routerLink]="subitems.url">{{subitems.titulo}} </a></li>
+                        <li><a [routerLink]="subitems.url" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true}">{{subitems.titulo}} </a></li>
                     </ul>
                 </li>
             </ul>
