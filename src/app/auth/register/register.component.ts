@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -14,7 +15,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private _userService: UserService,
-    private _alert: AlertsService
+    private _alert: AlertsService,
+    private _router: Router
   ) { }
 
   public registerForm = this.fb.group({
@@ -37,9 +39,13 @@ export class RegisterComponent implements OnInit {
           this.registerForm.reset();
           this.formSubmitted = false;
           this._alert.showAlert('Registro exitoso', res.message, 'success', 'Aceptar');
+          this._router.navigate(['/dashboard'])
         }, 
         err => {
           console.log(err);
+          if (err.error && !err.error.ok) {
+            this._alert.showAlert('Error', err.error.message, 'error', 'Aceptar');
+          }
           this.formSubmitted = false;
         }
       );
